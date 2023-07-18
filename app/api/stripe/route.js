@@ -12,8 +12,8 @@ export const GET = (req) => {
 export const POST = async (req) => {
   const cartItems = await req.json();
   // console.log("Recieved in backend for payment", cartItems);
-  const { origin } = absoluteUrl(req);
-  console.log("The request was made from: ", origin);
+  // const { origin } = absoluteUrl(req);
+  console.log("The request was made from: ",process.env.NEXT_PUBLIC_ORIGIN);
 
   const params = {
     submit_type: "pay",
@@ -48,8 +48,8 @@ export const POST = async (req) => {
       };
     }),
     mode: "payment",
-    success_url: `${origin}/success`,
-    cancel_url: `${origin}/canceled`,
+    success_url: `${process.env.NEXT_PUBLIC_ORIGIN}/success`,
+    cancel_url: `${process.env.NEXT_PUBLIC_ORIGIN}/canceled`,
   };
   console.log(
     "Publishable at checkout: ",
