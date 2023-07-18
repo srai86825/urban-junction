@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import absoluteUrl from 'next-absolute-url'
+import absoluteUrl from "next-absolute-url";
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
@@ -12,8 +12,8 @@ export const GET = (req) => {
 export const POST = async (req) => {
   const cartItems = await req.json();
   // console.log("Recieved in backend for payment", cartItems);
-  const { origin } = absoluteUrl(req)
-  console.log("The request was made from: ",origin);
+  const { origin } = absoluteUrl(req);
+  console.log("The request was made from: ", origin);
 
   const params = {
     submit_type: "pay",
@@ -51,7 +51,11 @@ export const POST = async (req) => {
     success_url: `${origin}/success`,
     cancel_url: `${origin}/canceled`,
   };
-
+  console.log(
+    "Publishable at checkout: ",
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE
+  );
+  console.log("Key at checkout: ", process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
   try {
     // Create Checkout Sessions from body params.
     const session = await stripe.checkout.sessions.create(params);
