@@ -1,0 +1,26 @@
+.footer-container {
+  color: #324d67;
+  text-align: center;
+  margin-top: 20px;
+  padding: 30px 10px;
+  font-weight: 300;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.footer-container .icons {
+  font-size: 16px;
+  display: flex;
+  gap: 20px;
+}
+.footer-container span{
+    color: #f02d34;
+    font-weight: 600;
+}
+
+.footer-container .icons svg:hover{
+    color: #e7555a;
+}
