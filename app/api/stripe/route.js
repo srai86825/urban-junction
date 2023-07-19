@@ -54,12 +54,12 @@ export const POST = async (req) => {
     cancel_url: `${process.env.NEXT_PUBLIC_ORIGIN}/canceled`,
   };
 
-  console.log("Origin at checkout: ", process.env.NEXT_PUBLIC_ORIGIN);
-  console.log(
-    "Publishable at checkout: ",
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE
-  );
-  console.log("Key at checkout: ", process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
+  // console.log("Origin at checkout: ", process.env.NEXT_PUBLIC_ORIGIN);
+  // console.log(
+  //   "Publishable at checkout: ",
+  //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE
+  // );
+  // console.log("Key at checkout: ", process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
   try {
     // Create Checkout Sessions from body params.
     const session = await stripe.checkout.sessions.create(params);

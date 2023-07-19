@@ -1,6 +1,5 @@
 "use client";
-import product from "@sanity/product";
-import { Content } from "next/font/google";
+
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { toast } from "react-hot-toast";
 
@@ -8,10 +7,11 @@ const Context = createContext();
 
 export const StateContext = ({ children }) => {
   const [showCart, setShowCart] = useState(false);
+  const [qty, setQty] = useState(1);
+
   const [cartItems, setCartItems] = useState([]);
   const [price, setPrice] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
-  const [qty, setQty] = useState(1);
 
   let foundItem;
   let index;
@@ -23,6 +23,33 @@ export const StateContext = ({ children }) => {
     setQty((prev) => (prev > 1 ? prev - 1 : 1));
   };
 
+  useEffect(() => {
+    const state = JSON.parse(localStorage.getItem("state"));
+    if (state) {
+      setPrice(state.price);
+      setTotalQuantity(state.totalQuantity);
+      setCartItems(state.cartItems);
+    }
+  }, []);
+  useEffect(() => {
+    const prev = JSON.parse(localStorage.getItem("state"));
+    localStorage.setItem("state", JSON.stringify({ ...prev, price: price }));
+  }, [price]);
+  useEffect(() => {
+    const prev = JSON.parse(localStorage.getItem("state"));
+    localStorage.setItem(
+      "state",
+      JSON.stringify({ ...prev, totalQuantity: totalQuantity })
+    );
+  }, [totalQuantity]);
+  useEffect(() => {
+    const prev = JSON.parse(localStorage.getItem("state"));
+    localStorage.setItem(
+      "state",
+      JSON.stringify({ ...prev, cartItems: cartItems })
+    );
+  }, [cartItems]);
+
   const addToCart = (prod, q) => {
     const alreadyInCart = cartItems?.find((item) => item._id === prod._id);
 
@@ -31,7 +58,7 @@ export const StateContext = ({ children }) => {
 
     if (alreadyInCart) {
       const updatedCart = cartItems.map((item) =>
-        item._id !== prod._id ? item : { ...item, quantity: q }
+        item._id !== prod._id ? item : { ...item, quantity: q + item.quantity }
       );
       setCartItems(updatedCart);
     } else {
@@ -46,7 +73,7 @@ export const StateContext = ({ children }) => {
     index = cartItems.findIndex((p) => p._id === id);
 
     let newCartItems = cartItems;
-    
+
     if (val === "inc") {
       newCartItems[index] = { ...foundItem, quantity: foundItem.quantity + 1 };
 
