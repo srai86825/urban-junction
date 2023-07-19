@@ -13,7 +13,7 @@ export const POST = async (req) => {
   const cartItems = await req.json();
   // console.log("Recieved in backend for payment", cartItems);
   // const { origin } = absoluteUrl(req);
-  console.log("The request was made from: ",process.env.NEXT_PUBLIC_ORIGIN);
+  
 
   const params = {
     submit_type: "pay",
@@ -51,9 +51,10 @@ export const POST = async (req) => {
     success_url: `${process.env.NEXT_PUBLIC_ORIGIN}/success`,
     cancel_url: `${process.env.NEXT_PUBLIC_ORIGIN}/canceled`,
   };
+  
+  console.log("Origin at checkout: ", process.env.NEXT_PUBLIC_ORIGIN);
   console.log("Publishable at checkout: ",process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE);
   console.log("Key at checkout: ", process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
-  console.log("Origin at checkout: ", process.env.NEXT_PUBLIC_ORIGIN);
   try {
     // Create Checkout Sessions from body params.
     const session = await stripe.checkout.sessions.create(params);
