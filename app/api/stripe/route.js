@@ -51,21 +51,18 @@ export const POST = async (req) => {
     success_url: `${process.env.NEXT_PUBLIC_ORIGIN}/success`,
     cancel_url: `${process.env.NEXT_PUBLIC_ORIGIN}/canceled`,
   };
-  console.log(
-    "Publishable at checkout: ",
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE
-  );
+  console.log("Publishable at checkout: ",process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE);
   console.log("Key at checkout: ", process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
   console.log("Origin at checkout: ", process.env.NEXT_PUBLIC_ORIGIN);
   try {
     // Create Checkout Sessions from body params.
     const session = await stripe.checkout.sessions.create(params);
-    // res.redirect(303, session.url);
+
     return new Response(JSON.stringify(session), { status: 200 });
   } catch (err) {
     // res.status(err.statusCode || 500).json(err.message);
     console.log("The paramas: ", params);
     console.log("Lead to this failure in checkout", err);
-    return new Response(`Failed checkout: ${err.message}`, { status: 500 });
+    return new Response(`Failed checkout: ${err}`, { status: 500 });
   }
 };
