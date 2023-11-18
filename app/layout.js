@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { Footer, Nav } from "@components";
 import "./globals.css";
 import { StateContext } from "@context/StateContext";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
           {children}
           <Footer />
         </StateContext>
+        <Analytics />
       </body>
     </html>
   );
